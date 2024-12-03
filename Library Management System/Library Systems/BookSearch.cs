@@ -24,14 +24,14 @@ namespace Final_Project___Library_Management_System
         // Possible parent, possible child
         public BookNode Add(BookNode child)
         {
-            if (root == null)
-                return root = child;
-
             return Add(root, child);
         }
 
         public BookNode Add(BookNode parent, BookNode child)
         {
+            if (root == null)
+                return root = child;
+
             if (parent == null)
                 return child;
 
