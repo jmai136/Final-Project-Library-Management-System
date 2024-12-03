@@ -56,6 +56,11 @@ namespace Final_Project___Library_Management_System
             return node;
         }
 
+        public BookNode Remove(BookNode child)
+        {
+            return Remove(GetRoot(), Search(child.ISBN, SearchCategory.ISBN));
+        }
+
         public BookNode Remove(BookNode parent, BookNode child)
         {
             if (parent == null || child == null)

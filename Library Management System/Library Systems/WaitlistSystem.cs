@@ -105,7 +105,15 @@ namespace Final_Project___Library_Management_System
 
         public bool RemoveBookFromWaitlist(BookNode book)
         {
-            return _waitlists.Remove(book);
+            foreach (BookNode b in _waitlists.Keys)
+            {
+                if (b.Equals(book))
+                {
+                    return _waitlists.Remove(b);
+                }
+            }
+
+            return false;
         }
 
         public Reader RemoveReaderFromWaitlist(string identifier)

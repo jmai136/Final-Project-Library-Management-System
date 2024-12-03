@@ -190,7 +190,7 @@ public partial class Program
                                     // as well as the potential waitlist system
                                     BookNode bookToRemove = libraryDatabase.RemoveBook(identifier);
 
-                                    bookSearch.Remove(bookSearch.GetRoot(), bookToRemove);
+                                    bookSearch.Remove(bookToRemove);
                                     waitlistSystem.RemoveBookFromWaitlist(bookToRemove);
                                     break;
                                 }
@@ -321,12 +321,12 @@ public partial class Program
                                         {
                                             case BookActions.Borrow:
                                                 {
-                                                    Console.WriteLine(String.Format("{0} {1} borrowed {2}", reader.FirstName, reader.LastName, libraryDatabase.FindBookByISBN(action.ISBN).Title));
+                                                    Console.WriteLine(String.Format("{0} {1} borrowed {2}", reader.FirstName, reader.LastName,action.ISBN));
                                                 }
                                                 break;
                                             case BookActions.Return:
                                                 {
-                                                    Console.WriteLine(String.Format("{0} {1} returned {2}", reader.FirstName, reader.LastName, libraryDatabase.FindBookByISBN(action.ISBN).Title));
+                                                    Console.WriteLine(String.Format("{0} {1} returned {2}", reader.FirstName, reader.LastName, action.ISBN));
                                                 }
                                                 break;
                                         }

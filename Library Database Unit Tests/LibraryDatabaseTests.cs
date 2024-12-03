@@ -51,6 +51,15 @@ namespace LibraryDatabaseTests
         }
 
         [TestMethod]
+        public void RemoveBookByTitleAndAuthor()
+        {
+            LibraryDatabase lbd = new LibraryDatabase();
+            lbd.AddBook("The Great Gatsby", "F. Scott Fitzgerald", "978-0-061-96436-7", 3);
+            BookNode book;
+            Assert.IsTrue(lbd.RemoveByTitleAndAuthor("The Great Gatsby", "F. Scott Fitzgerald", out book));
+        }
+
+        [TestMethod]
         public void RemoveBookByISBNNotInDatabase()
         {
             LibraryDatabase lbd = new LibraryDatabase();
@@ -228,6 +237,29 @@ namespace LibraryDatabaseTests
 
             if (bbs.Borrow(reader, lbd, book))
                 Assert.IsTrue(bbs.Return(reader, lbd, book));
+        }
+
+        [TestMethod]
+        public void RemoveBookFromLibraryAndOnWaitlist()
+        {
+            BookBorrowingSystem bbs = new BookBorrowingSystem();
+            LibraryDatabase lbd = new LibraryDatabase();
+            WaitlistSystem ws = new WaitlistSystem();
+
+            Reader reader = new Reader("a", "A", "A");
+            Reader reader_b = new Reader("b", "B", "B");
+
+            BookNode book = new BookNode("The Great Gatsby", "F. Scott Fitzgerald", "978-0-061-96436-7", 1);
+
+            lbd.AddBook(book);
+
+            bbs.Borrow(reader, lbd, book);
+            ws.AddToWaitlist(book, lbd, reader_b);
+
+            BookNode bookToRemove;
+            lbd.RemoveByTitleAndAuthor("The Great Gatsby", "F. Scott Fitzgerald", out bookToRemove);
+
+            Assert.IsTrue(ws.RemoveBookFromWaitlist(bookToRemove));
         }
     }
 }

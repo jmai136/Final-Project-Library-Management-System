@@ -390,7 +390,9 @@ namespace Final_Project___Library_Management_System
             // Iftitle and author aren't empty, find by that
             if (Regex.Match(identifier, bookRegex).Success)
             {
-                string[] parts = identifier.Split(",", StringSplitOptions.RemoveEmptyEntries);
+                string[] parts = identifier.Split(",", StringSplitOptions.RemoveEmptyEntries)
+                          .Select(p => p.Trim())
+                          .ToArray();
 
                 RemoveByTitleAndAuthor(parts[0], parts[1], out bookRemoved);
                 return bookRemoved;
