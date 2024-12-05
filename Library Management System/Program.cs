@@ -258,8 +258,7 @@ public partial class Program
 
                                     if (Regex.Match(identifier, isbnRegex).Success)
                                         bookToBorrow = bookSearch.Search(identifier, SearchCategory.ISBN);
-
-                                    if (Regex.Match(identifier, bookRegex).Success) 
+                                    else if (Regex.Match(identifier, bookRegex).Success) 
                                         bookToBorrow = bookSearch.Search(identifier);
 
                                     // Do the check for waitlist here
@@ -283,8 +282,12 @@ public partial class Program
                                     Console.WriteLine("Type in a book title with the corresponding author ({book title}, {author}) or ISBN\n");
                                     string identifier = Console.ReadLine();
 
-                                    BookNode bookToReturn = (Regex.Match(identifier, isbnRegex).Success) ?
-                                         bookSearch.Search(identifier, SearchCategory.ISBN) : (Regex.Match(identifier, bookRegex).Success) ? bookSearch.Search(identifier) : null;
+                                    BookNode bookToReturn = null;
+
+                                    if (Regex.Match(identifier, isbnRegex).Success)
+                                        bookToReturn = bookSearch.Search(identifier, SearchCategory.ISBN);
+                                    else if (Regex.Match(identifier, bookRegex).Success)
+                                        bookToReturn = bookSearch.Search(identifier);
 
                                     if (bookToReturn == null || reader == null)
                                     {
